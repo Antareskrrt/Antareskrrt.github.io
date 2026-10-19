@@ -100,6 +100,11 @@ const translations = {
         "FLORA",
         "Gioco top down 2D, Flora è sviluppata attorno ai temi dell’inquinamento e della sostenibilità per un contest all' università di camerino. Attraverso esplorazione, enigmi e momenti di sfida, il giocatore attraversa un mondo alterato in cui l’ambiente racconta le conseguenze dello squilibrio naturale.",
         "https://matterder.itch.io/flora"
+      ],
+      [
+        "Fun To Type",
+        "Il mio progetto più recente, un sito web che permette di allenare la propria velocità di digitazione alla tastiera divertendosi con diversi giochi e modalità. Il progetto è open source e disponibile su GitHub.",
+        "https://github.com/Antareskrrt/funtotype"
       ]
     ],
     contact: "Puoi contattarmi qui:",
@@ -166,6 +171,11 @@ const translations = {
         "FLORA",
         "A top-down 2D game developed around pollution and sustainability for a contest at the University of Camerino. Through exploration, puzzles, and challenges, players travel through an altered world where the environment reveals the consequences of ecological imbalance.",
         "https://matterder.itch.io/flora"
+      ],
+      [
+        "Fun To Type",
+        "My most recent project, a website that allows users to improve their typing speed while having fun with various games and modes. The project is open-source and available on GitHub. Go check it out!",
+        "https://github.com/Antareskrrt/funtotype"
       ]
     ],
     contact: "You can contact me here:",
