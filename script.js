@@ -45,7 +45,6 @@ let welcomeObserver;
 let namePlaceholderObserver;
 let visitChartData;
 let visitChartFailed = false;
-let visitChartObserver;
 let selectedVisitWeek = "thisWeek";
 const history = [];
 let historyIndex = 0;
@@ -230,8 +229,6 @@ async function fetchDailyVisits(date) {
 
 function renderVisitChart() {
   if (!visitChart) return;
-  visitChartObserver?.disconnect();
-  visitChartObserver = null;
   if (visitChartFailed) {
     visitChart.textContent = translations[language].visitStatsError;
     return;
@@ -268,27 +265,74 @@ function renderVisitChart() {
     controls.appendChild(toggle);
   });
 
-  const chart = document.createElement("ascii-art");
-  chart.className = "visit-chart-art";
-  chart.setAttribute("piece", "bar-chart");
-  chart.setAttribute("options", JSON.stringify({
-    title: translations[language].visitChartTitle,
-    labels,
-    datasets: [{
-      name: "",
-      values: selectedDataset.values
-    }]
-  }));
-  const removeEmptySeriesLabel = () => {
-    const artwork = chart.querySelector("pre");
-    if (!artwork) return;
-
-    const cleanedText = artwork.textContent.replace(/\[\s*(?:undefined)?\s*\]/g, "");
-    if (artwork.textContent !== cleanedText) artwork.textContent = cleanedText;
+  const chartWidth = 60;
+  const axisMax = 15;
+  const axisLabelWidth = String(axisMax).length;
+  const barWidth = 4;
+  const gap = Math.max(1, Math.min(3, Math.floor(
+    (chartWidth - 4 - axisLabelWidth - labels.length * barWidth) / (labels.length + 1)
+  )));
+  const plotWidth = labels.length * barWidth + (labels.length + 1) * gap;
+  const axisStart = Math.floor((chartWidth - (axisLabelWidth + 1 + plotWidth)) / 2);
+  const axisColumn = axisStart + axisLabelWidth;
+  const baseline = axisMax + 1;
+  const rows = Array.from({ length: axisMax + 3 }, () => Array(chartWidth).fill(" "));
+  const put = (row, column, text) => {
+    [...text].forEach((character, index) => {
+      if (column + index >= 0 && column + index < chartWidth) {
+        rows[row][column + index] = character;
+      }
+    });
   };
-  visitChartObserver = new MutationObserver(removeEmptySeriesLabel);
-  visitChartObserver.observe(chart, { childList: true, characterData: true, subtree: true });
-  removeEmptySeriesLabel();
+  const barColumns = labels.map((_, index) =>
+    axisColumn + 1 + gap + index * (barWidth + gap)
+  );
+  const ticks = [15, 10, 5, 0];
+
+  put(0, axisStart, translations[language].visitChartTitle);
+  for (let row = 1; row < baseline; row++) {
+    rows[row][axisColumn] = "│";
+  }
+  ticks.forEach((value) => {
+    const row = baseline - value;
+    put(row, axisColumn - axisLabelWidth - 1, String(value).padStart(axisLabelWidth));
+    rows[row][axisColumn] = value === 0 ? "└" : "┤";
+    if (value > 0) {
+      for (let column = axisColumn + 1; column <= axisColumn + plotWidth; column++) {
+        rows[row][column] = "┈";
+      }
+    }
+  });
+  for (let column = axisColumn + 1; column <= axisColumn + plotWidth; column++) {
+    rows[baseline][column] = "─";
+  }
+
+  selectedDataset.values.forEach((rawValue, index) => {
+    const value = Math.max(0, Math.round(rawValue));
+    const barHeight = Math.min(axisMax, value);
+    for (let row = 0; row < barHeight; row++) {
+      for (let column = 0; column < barWidth; column++) {
+        rows[baseline - 1 - row][barColumns[index] + column] = "█";
+      }
+    }
+    const valueLabel = String(rawValue);
+    put(
+      Math.max(0, baseline - barHeight - 1),
+      barColumns[index] + Math.floor((barWidth - valueLabel.length) / 2),
+      valueLabel
+    );
+    put(
+      baseline + 1,
+      barColumns[index] + Math.floor((barWidth - labels[index].length) / 2),
+      labels[index]
+    );
+  });
+
+  const chart = document.createElement("pre");
+  chart.className = "visit-chart-art";
+  chart.setAttribute("role", "img");
+  chart.setAttribute("aria-label", translations[language].visitChartTitle);
+  chart.textContent = rows.map((row) => row.join("")).join("\n");
   chartContainer.appendChild(chart);
   visitChart.replaceChildren(controls, chartContainer);
 }

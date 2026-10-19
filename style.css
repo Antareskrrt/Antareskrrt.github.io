@@ -250,7 +250,7 @@ body.entered .welcome-screen {
   position: fixed;
   top: 40px;
   right: 150px;
-  max-width: 35vw;
+  max-width: 50vw;
   color: var(--muted);
   pointer-events: auto;
 }
@@ -283,9 +283,16 @@ body.entered .welcome-screen {
   color: var(--text);
 }
 
-.visit-chart ascii-art {
+.visit-chart-art {
   display: block;
   max-width: 100%;
+  margin: 0;
+  overflow-x: auto;
+  color: inherit;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.15;
+  white-space: pre;
 }
 
 
