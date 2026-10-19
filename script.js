@@ -207,9 +207,11 @@ function formatVisitDate(date) {
 
 async function fetchDailyVisits(date) {
   const dateString = formatVisitDate(date);
+  const nextDate = new Date(date);
+  nextDate.setDate(nextDate.getDate() + 1);
   const url = new URL(`${goatCounterUrl}/counter/TOTAL.json`);
   url.searchParams.set("start", dateString);
-  url.searchParams.set("end", dateString);
+  url.searchParams.set("end", formatVisitDate(nextDate));
 
   const response = await fetch(url);
   if (!response.ok) {
