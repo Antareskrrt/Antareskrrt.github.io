@@ -1,0 +1,84 @@
+
+<!doctype html>
+<html lang="it" data-theme="0">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="mobile-notice">Open this site on a PC</div>
+  <section class="welcome-screen" aria-labelledby="entry-title">
+    <div class="entry-topline">
+      <button type="button" id="language-toggle" aria-label="Switch to English">EN</button>
+      <p class="changelanguage">switch language</p>
+    </div>
+    <form id="welcome-form">
+      <div class="name-entry">
+        <div class="name-field">
+            <ascii-art
+              id="name-placeholder"
+              piece="scramble"
+              options='{"phrases":["il tuo nome"]}'
+              aria-hidden="true"
+            ></ascii-art>
+          <input
+            id="visitor-name"
+            type="text"
+            name="name"
+            aria-label="Il tuo nome"
+            autocomplete="given-name"
+            maxlength="40"
+            required
+          >
+        </div>
+        <button type="submit" id="enter-button">Entra</button>
+      </div>
+    </form>
+  </section>
+  <script type="module" src="https://ascii.rest/ascii.js"></script>
+    <p class="pino">daniele_ciafrei@portfolio:~$</p>
+  <div class="portfolio-layout">
+    <main class="terminal">
+      <section class="screen">
+        <div id="output" aria-live="polite">
+          <p id="welcome"></p>
+          <p id="hint" class="muted"></p>
+        </div>
+        <ascii-art class="art_screen v1" piece="kyoto-dusk"></ascii-art>
+        <ascii-art class="art_screen v1" piece="edge-orbit"></ascii-art>
+        <ascii-art class="art_screen v1" piece="storm-plains"></ascii-art>
+        <ascii-art class="art_screen v1" piece="planet-scale"></ascii-art>
+        <ascii-art class="art_screen v1" piece="cloud-sea"></ascii-art>
+        <ascii-art class="art_screen v1" piece="desert-night"></ascii-art>
+        <ascii-art class="art_screen v1" piece="aurora-fjord"></ascii-art>
+        <ascii-art class="art_screen v2" piece="black-hole"></ascii-art>
+        <ascii-art class="art_screen v2" piece="eclipse"></ascii-art>
+        <ascii-art class="art_screen v2" piece="galaxy"></ascii-art>
+        <ascii-art class="art_screen v2" piece="solar-system" options='{"speed":0.5}'></ascii-art>
+        <ascii-art class="art_screen v3" piece="double-pendulum"></ascii-art>
+        <ascii-art class="art_screen v3" piece="newtons-cradle" options='{"lifted":1}'></ascii-art>
+        <ascii-art class="art_screen v4" piece="butterfly"></ascii-art>
+        <ascii-art class="art_screen v4" piece="cat"></ascii-art>
+        <ascii-art class="art_screen v4" piece="owl"></ascii-art>
+        <ascii-art class="art_screen v4" piece="spider"></ascii-art>
+        <ascii-art class="art_screen v4" piece="fireworks"></ascii-art>
+        <div id="visit-chart" class="visit-chart" role="status" aria-live="polite"></div>
+
+        <form id="command-form">
+          <label for="command-input" id="prompt">/</label>
+          <input
+            id="command-input"
+            type="text"
+            placeholder="help"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+          >
+        </form>
+      </section>
+    </main>
+  </div>
+  <script src="script.js" defer></script>
+</body>
+</html>
