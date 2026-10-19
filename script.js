@@ -9,6 +9,7 @@ const prompt = document.querySelector("#prompt");
 const welcomeForm = document.querySelector("#welcome-form");
 const visitorNameInput = document.querySelector("#visitor-name");
 const namePlaceholder = document.querySelector("#name-placeholder");
+const namePlaceholderFallback = document.querySelector(".name-placeholder-fallback");
 const enterButton = document.querySelector("#enter-button");
 const languageToggle = document.querySelector("#language-toggle");
 const languageLabel = document.querySelector(".changelanguage");
@@ -53,7 +54,7 @@ const translations = {
   it: {
     changelanguage: "switch language",
     switchLanguage: "Passa all'inglese",
-    namePlaceholder: "Il tuo nome",
+    namePlaceholder: "il tuo nome",
     enter: "Entra",
     welcome: (name) => ({
       prefix: `Benvenuto/a nel mio portfolio, `,
@@ -379,6 +380,7 @@ async function loadVisitChart() {
 function initializeText() {
   document.documentElement.lang = language;
   visitorNameInput.setAttribute("aria-label", translations[language].namePlaceholder);
+  namePlaceholderFallback.textContent = translations[language].namePlaceholder;
   namePlaceholder.setAttribute("options", JSON.stringify({
     phrases: [translations[language].namePlaceholder.toLowerCase()]
   }));
@@ -414,13 +416,19 @@ function initializeText() {
 
 function alignNamePlaceholder() {
   const art = namePlaceholder.querySelector("pre");
-  if (!art) return;
+  if (art) {
+    const alignedText = art.textContent
+      .trim()
+      .split("\n")
+      .map((line) => line.trimStart())
+      .join("\n");
+    if (art.textContent !== alignedText) art.textContent = alignedText;
+  }
 
-  const alignedText = art.textContent
-    .split("\n")
-    .map((line) => line.trimStart())
-    .join("\n");
-  if (art.textContent !== alignedText) art.textContent = alignedText;
+  namePlaceholder.closest(".name-field").classList.toggle(
+    "has-ascii-placeholder",
+    Boolean(art?.textContent.trim())
+  );
 }
 
 function addLine(text, className = "") {
@@ -869,4 +877,3 @@ languageToggle.addEventListener("click", () => {
 initializeText();
 loadGoatCounter();
 loadVisitChart();
-visitorNameInput.focus();

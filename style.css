@@ -162,15 +162,33 @@ body.entered .welcome-screen {
   align-items: center;
   overflow: hidden;
   color: var(--muted);
+  font: inherit;
+  line-height: inherit;
+  pointer-events: none;
+}
+
+.name-placeholder-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+  font: inherit;
+  line-height: inherit;
   pointer-events: none;
 }
 
 .name-field ascii-art pre {
   margin: 0;
+  font: inherit;
+  line-height: inherit;
 }
 
+.name-field.has-ascii-placeholder .name-placeholder-fallback,
 .name-field.has-value ascii-art,
-.name-field:focus-within ascii-art {
+.name-field:focus-within ascii-art,
+.name-field.has-value .name-placeholder-fallback,
+.name-field:focus-within .name-placeholder-fallback {
   visibility: hidden;
 }
 

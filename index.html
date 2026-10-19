@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css?v=20261019-9">
+  <link rel="stylesheet" href="style.css?v=20261019-12">
 </head>
 <body>
   <div class="mobile-notice">Open this site on a PC</div>
@@ -16,17 +16,18 @@
     <form id="welcome-form">
       <div class="name-entry">
         <div class="name-field">
-            <ascii-art
-              id="name-placeholder"
-              piece="scramble"
-              options='{"phrases":["il tuo nome"]}'
-              aria-hidden="true"
-            ></ascii-art>
+          <span class="name-placeholder-fallback" aria-hidden="true">il tuo nome</span>
+          <ascii-art
+            id="name-placeholder"
+            piece="scramble"
+            options='{"phrases":["il tuo nome"]}'
+            aria-hidden="true"
+          ></ascii-art>
           <input
             id="visitor-name"
             type="text"
             name="name"
-            aria-label="Il tuo nome"
+            aria-label="il tuo nome"
             autocomplete="given-name"
             maxlength="40"
             required
@@ -79,6 +80,6 @@
       </section>
     </main>
   </div>
-  <script src="script.js?v=20261019-9" defer></script>
+  <script src="script.js?v=20261019-12" defer></script>
 </body>
 </html>
